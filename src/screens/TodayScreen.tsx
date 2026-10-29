@@ -1,6 +1,8 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import type { FlowActions } from '../App.tsx'
 import { InstallHint } from '../components/InstallHint.tsx'
+import { ProteinCard } from '../components/ProteinCard.tsx'
+import { WeightCard } from '../components/WeightCard.tsx'
 import { db, finishedSessions, unfinishedSession, type Session } from '../db.ts'
 import { findStep, resolveStep } from '../program/ladders.ts'
 import { currentSteps, nextWorkoutAfter, startOfDay, startOfWeek } from '../program/session.ts'
@@ -16,11 +18,13 @@ export function TodayScreen({ actions }: { actions: FlowActions }) {
       unfinishedSession(),
       currentSteps(),
     ])
-    return { tested: tested > 0, history, inProgress, steps }
+    // Segunda-feira: a pesagem vem antes de tudo.
+    const isMonday = new Date().getDay() === 1
+    return { tested: tested > 0, history, inProgress, steps, isMonday }
   })
 
   if (!data) return null
-  const { tested, history, inProgress, steps } = data
+  const { tested, history, inProgress, steps, isMonday } = data
 
   const weekCount = history.filter((s) => s.finishedAt! >= startOfWeek()).length
   const trainedToday = history.some((s) => s.finishedAt! >= startOfDay())
@@ -34,6 +38,8 @@ export function TodayScreen({ actions }: { actions: FlowActions }) {
       </header>
 
       <InstallHint />
+
+      {isMonday && <WeightCard prompt />}
 
       {!tested ? (
         <section className="card card-primary">
@@ -85,6 +91,10 @@ export function TodayScreen({ actions }: { actions: FlowActions }) {
           ))}
         </div>
       </section>
+
+      {!isMonday && <WeightCard prompt />}
+
+      <ProteinCard />
     </>
   )
 }

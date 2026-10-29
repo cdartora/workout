@@ -566,3 +566,185 @@ button {
 .ladder-bar span.filled {
   background: var(--accent);
 }
+
+/* Nutrição */
+
+.meter {
+  height: 10px;
+  border-radius: 5px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.meter div {
+  height: 100%;
+  border-radius: 5px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.chip:active {
+  border-color: var(--accent);
+}
+
+.toast {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom) + 12px);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  max-width: 528px;
+  margin: 0 auto;
+  padding: 4px 4px 4px 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-2);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.5);
+  font-size: 0.9rem;
+}
+
+.toast .button-link {
+  color: var(--accent);
+}
+
+.log-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.log-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  border-top: 1px solid var(--border);
+}
+
+.log-list li > span:first-child {
+  flex: 1;
+}
+
+.log-list li.log-edit {
+  display: block;
+  padding: 12px 0;
+}
+
+.log-button {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.remove {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+input[type='text'] {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  /* 16px+ evita o zoom automático do iOS ao focar */
+  font-size: 1.05rem;
+}
+
+input[type='text']:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.input-with-unit {
+  position: relative;
+  display: block;
+  flex: 1;
+}
+
+.input-with-unit input {
+  padding-right: 44px;
+}
+
+.input-with-unit span {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.inline-form {
+  display: flex;
+  gap: 8px;
+}
+
+.inline-form .button-primary {
+  margin-top: 0;
+  min-height: 52px;
+  padding: 0 20px;
+}
+
+.food-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.form-actions > * {
+  flex: 1;
+}
+
+.form-actions .button-primary {
+  margin-top: 0;
+  min-height: 52px;
+}
+
+.button-link.danger {
+  color: #f87171;
+}
+
+.disclaimer {
+  padding: 0 4px;
+}

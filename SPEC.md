@@ -92,11 +92,14 @@ Exercícios isométricos (pendurar ativo, prancha, hollow hold) usam **segundos*
 
 ## 5. Nutrição (simples)
 
-- **Meta de proteína**: ~1,8 g/kg → **~130 g/dia** (recalculada conforme o peso).
+- **Meta de proteína**: 1,8 g/kg, arredondada de 5 em 5 g → **~130 g/dia** (recalculada a cada pesagem).
 - **Atalhos de alimentos**: o usuário cadastra porções que come de verdade
-  (ex.: "3 ovos = 18 g", "whey 1 scoop = 24 g"); um toque adiciona ao dia.
+  (ex.: "3 ovos = 18 g", "whey 1 scoop = 24 g"); um toque adiciona ao dia, com "Desfazer".
+  O app vem com 8 atalhos de exemplo, editáveis. Também dá para registrar algo avulso.
 - **Sem contagem de calorias** na v1.
-- **Pesagem semanal** (segunda de manhã, em jejum):
+- **Pesagem semanal** (segunda de manhã, em jejum). A tela Hoje pede a pesagem enquanto não houver
+  uma na semana (em primeiro lugar às segundas). Uma pesagem por dia; registrar de novo substitui.
+  Ritmo calculado contra uma pesagem de pelo menos 5 dias antes, normalizado para kg/semana:
   - Meta: **+0,2 a +0,35 kg/semana**.
   - 2 semanas sem subir → sugere adicionar ~300 kcal/dia (com exemplo de lanche).
   - Acima de ~0,5 kg/semana → sugere segurar.
