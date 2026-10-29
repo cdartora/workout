@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { FlowActions } from '../App.tsx'
+import { BackupCard } from '../components/BackupCard.tsx'
+import { RemindersGuide } from '../components/RemindersGuide.tsx'
 import { isStandalone } from '../platform.ts'
 
 export function SettingsScreen({ actions }: { actions: FlowActions }) {
@@ -38,9 +40,8 @@ export function SettingsScreen({ actions }: { actions: FlowActions }) {
           Refazer teste de nível
         </button>
       </section>
-      <section className="card empty">
-        <p>Backup e guia de lembretes no Atalhos chegam numa próxima etapa.</p>
-      </section>
+      <BackupCard />
+      <RemindersGuide />
     </>
   )
 }

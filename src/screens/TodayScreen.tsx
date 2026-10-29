@@ -1,5 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import type { FlowActions } from '../App.tsx'
+import { BackupCard } from '../components/BackupCard.tsx'
 import { InstallHint } from '../components/InstallHint.tsx'
 import { ProteinCard } from '../components/ProteinCard.tsx'
 import { WeightCard } from '../components/WeightCard.tsx'
@@ -136,6 +137,8 @@ export function TodayScreen({ actions }: { actions: FlowActions }) {
       )}
 
       {!isMonday && <WeightCard prompt />}
+
+      <BackupCard reminder />
 
       <ProteinCard />
     </>

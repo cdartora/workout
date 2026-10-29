@@ -11,6 +11,7 @@ App publicado: https://cdartora.github.io/workout/
 npm install
 npm run dev      # servidor local
 npm run lint
+npm test         # testes da lógica (progressão, nutrição, sequências, conquistas, backup)
 npm run build    # gera dist/ (com service worker)
 ```
 

@@ -108,8 +108,9 @@ Exercícios isométricos (pendurar ativo, prancha, hollow hold) usam **segundos*
 
 ## 6. Motivação
 
-- **Lembretes via app Atalhos do iOS** (sem push web na v1): o app tem uma tela com
-  passo a passo para criar automações (treino seg/qua/sex ~19h; proteína ~21h).
+- **Lembretes via app Atalhos do iOS** (sem push web na v1): a aba Ajustes tem o passo a passo
+  para criar automações "Hora do Dia" → "Mostrar Notificação", com os textos prontos para copiar
+  (treino seg/qua/sex 19h; proteína diária 21h; pesagem e backup segunda 7h).
 - **Sequência semanal**: semanas seguidas com 3/3 treinos + calendário estilo GitHub (16 semanas).
   Constância é medida **por semana**, não por dias seguidos; a semana em andamento não quebra a sequência.
 - **Conquistas** por marcos reais (21, calculadas a partir dos dados, sem tabela própria): treinos
@@ -124,10 +125,13 @@ Exercícios isométricos (pendurar ativo, prancha, hollow hold) usam **segundos*
 ## 7. Dados e backup
 
 - Tudo em IndexedDB no aparelho.
-- **Exportar backup**: arquivo único (inclui fotos) salvo via menu de compartilhar → iCloud Drive.
-- **Importar backup**: restaura tudo.
-- **Lembrete de backup**: se o último tiver mais de 7 dias, o app sugere — de preferência
-  logo após a pesagem de segunda.
+- **Exportar backup**: arquivo JSON único (fotos em base64), salvo pelo menu de compartilhar
+  → "Salvar em Arquivos" → iCloud Drive. Em dois toques (Fazer backup → Salvar backup), porque o iOS
+  só abre o menu direto de um toque e montar o arquivo leva um tempo. Sem menu de compartilhar, baixa o arquivo.
+- **Importar backup**: valida o arquivo, pede confirmação e substitui todos os dados; o backup
+  importado passa a contar como o último feito.
+- **Lembrete de backup**: na tela Hoje, quando há dados e o último backup tem 7+ dias (logo abaixo
+  da pesagem). O lembrete das segundas no Atalhos junta pesagem e backup.
 
 ## 8. Telas
 
