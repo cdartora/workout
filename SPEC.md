@@ -57,16 +57,20 @@ com nutrição simples. Definido em sessão de brainstorm (estilo *grill-me*) em
 Exercícios isométricos (pendurar ativo, prancha, hollow hold) usam **segundos** no lugar de repetições.
 
 ### Regra de progressão — dupla progressão
-- Faixa padrão: **3 × 6–12** repetições (pernas: **3 × 8–20**; isométricos: **3 × 15–45 s**).
-- Meta da próxima sessão: **+1 repetição** em pelo menos uma série em relação à última.
+- Faixa padrão: **3 × 6–12** repetições (pernas: **3 × 8–20**; acessórios com elástico: **3 × 10–15**;
+  core na barra: **3 × 8–15**; isométricos: **3 × 15–45 s**, prancha 20–60 s). Degraus excêntricos
+  (negativas, nórdico) usam faixas menores. Detalhes em `src/program/ladders.ts`.
+- Meta da próxima sessão: **+1 repetição** (ou **+5 s**) na série mais fraca da última sessão no mesmo degrau.
 - Ao completar **todas as séries no topo da faixa**, o app **sugere subir de degrau**;
   o usuário aceita ou mantém (palavra final é dele). Ao subir, a meta volta ao início da faixa.
 - Cada subida de degrau gera uma **conquista**.
 
 ### Teste de nível
-- No **primeiro uso** (~15 min): máximo de repetições com boa forma em movimentos-base
-  (flexão, barra/pendurar, agachamento, remada, pike, prancha), com degraus mais fáceis
-  como fallback quando o resultado é zero.
+- No **primeiro uso** (~20 min, 8 movimentos, 90 s de descanso): máximo com boa forma em
+  flexão, agachamento, barra fixa, pike, ponte unilateral, remada sob a mesa, elevação de joelhos
+  e prancha. Limiares por movimento definem o degrau inicial (ex.: barra 0 → negativa,
+  1–5 → com elástico, 6–14 → barra fixa, 15+ → com mochila); o usuário ajusta no final.
+  Acessórios com elástico começam no elástico leve.
 - Define o **degrau inicial** de cada escada.
 - **Repetido a cada 4–6 semanas** (o app sugere) — serve como marco de progresso
   ("set: 2 barras → nov: 7 barras").
@@ -74,10 +78,14 @@ Exercícios isométricos (pendurar ativo, prancha, hollow hold) usam **segundos*
 ## 4. Experiência durante o treino (modo guiado)
 
 - **Uma tela por exercício**: nome, degrau atual, descrição curta da execução
-  e **link para vídeo no YouTube**.
+  e **link de busca no YouTube** (sempre válido). Antes da 1ª série dá para trocar o degrau (‹ ›).
+- Supersets alternam os exercícios a cada série e descansam no fim da rodada.
+- Treino em andamento é salvo a cada série e pode ser retomado.
 - **Meta da série** visível ("objetivo: 9"), vinda da última sessão.
 - Registro com **botões grandes de + e −**, pré-preenchidos com a meta (“Feito” = 1 toque).
-- **Timer de descanso automático** (~90 s) com vibração/som ao terminar.
+- **Timer de descanso automático** (90 s; 60 s em supersets e core) com bipes ao terminar.
+  O iPhone não oferece vibração para sites, e os bipes respeitam a chave de silencioso.
+- Cronômetro para isometrias, com bipe ao atingir a meta.
 - Avanço automático para a próxima série/exercício.
 - **Tela sempre acesa** durante o treino (Wake Lock).
 - **Resumo final**: comparação com a sessão anterior, recordes, sugestões de subida de degrau.

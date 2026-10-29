@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
+import type { FlowActions } from '../App.tsx'
 import { isStandalone } from '../platform.ts'
 
-export function SettingsScreen() {
+export function SettingsScreen({ actions }: { actions: FlowActions }) {
   const [persisted, setPersisted] = useState<boolean | null>(null)
 
   useEffect(() => {
@@ -30,8 +31,15 @@ export function SettingsScreen() {
           </div>
         </dl>
       </section>
+      <section className="card">
+        <h2>Teste de nível</h2>
+        <p className="muted">Refaça a cada 4–6 semanas para medir sua evolução e recalibrar os degraus.</p>
+        <button type="button" className="button-secondary" onClick={actions.startLevelTest}>
+          Refazer teste de nível
+        </button>
+      </section>
       <section className="card empty">
-        <p>Backup, guia de lembretes no Atalhos e refazer teste de nível chegam em breve.</p>
+        <p>Backup e guia de lembretes no Atalhos chegam numa próxima etapa.</p>
       </section>
     </>
   )

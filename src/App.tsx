@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { TabBar } from './components/TabBar.tsx'
 import { TABS, type Tab } from './components/tabs.tsx'
+import { LevelTestFlow } from './flows/LevelTestFlow.tsx'
+import { WorkoutFlow } from './flows/WorkoutFlow.tsx'
+import { startSession } from './program/session.ts'
+import type { WorkoutId } from './program/workouts.ts'
 import { NutritionScreen } from './screens/NutritionScreen.tsx'
 import { ProgressScreen } from './screens/ProgressScreen.tsx'
 import { SettingsScreen } from './screens/SettingsScreen.tsx'
@@ -12,8 +16,17 @@ function tabFromHash(): Tab {
   return TABS.some((t) => t.id === hash) ? (hash as Tab) : 'hoje'
 }
 
+type Flow = { kind: 'levelTest' } | { kind: 'workout'; sessionId: number }
+
+export interface FlowActions {
+  startLevelTest: () => void
+  startWorkout: (workout: WorkoutId) => void
+  resumeWorkout: (sessionId: number) => void
+}
+
 export default function App() {
   const [tab, setTab] = useState<Tab>(tabFromHash)
+  const [flow, setFlow] = useState<Flow>()
 
   useEffect(() => {
     const onHashChange = () => setTab(tabFromHash())
@@ -26,13 +39,27 @@ export default function App() {
     window.scrollTo(0, 0)
   }
 
+  const actions: FlowActions = {
+    startLevelTest: () => setFlow({ kind: 'levelTest' }),
+    startWorkout: (workout) => void startSession(workout).then((sessionId) => setFlow({ kind: 'workout', sessionId })),
+    resumeWorkout: (sessionId) => setFlow({ kind: 'workout', sessionId }),
+  }
+
+  const closeFlow = () => {
+    setFlow(undefined)
+    window.scrollTo(0, 0)
+  }
+
+  if (flow?.kind === 'levelTest') return <LevelTestFlow onDone={closeFlow} />
+  if (flow?.kind === 'workout') return <WorkoutFlow sessionId={flow.sessionId} onDone={closeFlow} />
+
   return (
     <div className="app">
       <main className="screen">
-        {tab === 'hoje' && <TodayScreen />}
+        {tab === 'hoje' && <TodayScreen actions={actions} />}
         {tab === 'progresso' && <ProgressScreen />}
         {tab === 'nutricao' && <NutritionScreen />}
-        {tab === 'ajustes' && <SettingsScreen />}
+        {tab === 'ajustes' && <SettingsScreen actions={actions} />}
       </main>
       <TabBar active={tab} onChange={changeTab} />
     </div>
