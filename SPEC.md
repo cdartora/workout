@@ -110,12 +110,16 @@ Exercícios isométricos (pendurar ativo, prancha, hollow hold) usam **segundos*
 
 - **Lembretes via app Atalhos do iOS** (sem push web na v1): o app tem uma tela com
   passo a passo para criar automações (treino seg/qua/sex ~19h; proteína ~21h).
-- **Sequência semanal**: semanas seguidas com 3/3 treinos + calendário estilo GitHub.
-  Constância é medida **por semana**, não por dias seguidos.
-- **Conquistas** por marcos reais: primeira barra completa, 10 flexões, novo degrau,
-  +5 kg de peso corporal, etc.
-- **Fotos de progresso** mensais (frente/lado/costas), comprimidas (~200 KB),
-  guardadas no app, com comparação lado a lado.
+- **Sequência semanal**: semanas seguidas com 3/3 treinos + calendário estilo GitHub (16 semanas).
+  Constância é medida **por semana**, não por dias seguidos; a semana em andamento não quebra a sequência.
+- **Conquistas** por marcos reais (21, calculadas a partir dos dados, sem tabela própria): treinos
+  (1/10/25/50/100), semana completa, sequências (4/8/12 semanas), degraus subidos (1/5/10),
+  primeira barra, 10 barras, 10 flexões, pistol, negativa de parada de mão, +2,5/+5 kg,
+  meta de proteína em 7/30 dias. Novas conquistas aparecem no resumo do treino.
+- **Fotos de progresso** mensais (frente/lado/costas), comprimidas no aparelho (JPEG, 1080 px),
+  guardadas no app, com comparação lado a lado (com o peso de cada data). A tela Hoje lembra
+  quando a última foto tem 4+ semanas.
+- **Reteste**: a tela Hoje sugere refazer o teste de nível 4 semanas depois do último.
 
 ## 7. Dados e backup
 
@@ -134,8 +138,9 @@ Barra inferior com 4 abas:
      dia de descanso (próximo treino + destaque para proteína) ou pesagem (segunda).
    - Semana: ●●○ (treinos feitos/3) + sequência de semanas.
    - Proteína do dia: barra de progresso + atalhos.
-2. **Progresso** — gráficos de repetições/degraus por exercício, peso corporal,
-   calendário, conquistas, fotos.
+2. **Progresso** — sequência atual/melhor e total de treinos, calendário, evolução por exercício
+   (total por treino no degrau atual), gráfico de peso, conquistas e fotos. Gráficos de uma série,
+   com toque para ver cada ponto e tabela "Ver dados".
 3. **Nutrição** — registro do dia, gerenciar atalhos, histórico de proteína e peso.
 4. **Ajustes** — backup, guia do Atalhos, refazer teste de nível, perfil (peso/altura).
 

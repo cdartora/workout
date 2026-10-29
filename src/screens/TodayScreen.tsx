@@ -6,25 +6,40 @@ import { WeightCard } from '../components/WeightCard.tsx'
 import { db, finishedSessions, unfinishedSession, type Session } from '../db.ts'
 import { findStep, resolveStep } from '../program/ladders.ts'
 import { currentSteps, nextWorkoutAfter, startOfDay, startOfWeek } from '../program/session.ts'
+import { WEEKLY_GOAL, currentStreak } from '../program/streaks.ts'
 import { WORKOUTS, buildSlots } from '../program/workouts.ts'
 
-const WEEKLY_GOAL = 3
+const DAY = 24 * 60 * 60 * 1000
+/** Sugere refazer o teste de nível depois de 4 semanas (spec: a cada 4–6). */
+const RETEST_AFTER = 28 * DAY
+/** Fotos de progresso: uma rodada por mês. */
+const PHOTOS_EVERY = 28 * DAY
 
 export function TodayScreen({ actions }: { actions: FlowActions }) {
   const data = useLiveQuery(async () => {
-    const [tested, history, inProgress, steps] = await Promise.all([
-      db.levelTests.count(),
+    const [lastTest, history, inProgress, steps, lastPhoto] = await Promise.all([
+      db.levelTests.orderBy('date').last(),
       finishedSessions(),
       unfinishedSession(),
       currentSteps(),
+      db.photos.orderBy('date').last(),
     ])
-    // Segunda-feira: a pesagem vem antes de tudo.
-    const isMonday = new Date().getDay() === 1
-    return { tested: tested > 0, history, inProgress, steps, isMonday }
+    const now = Date.now()
+    return {
+      tested: lastTest !== undefined,
+      retestDue: lastTest !== undefined && now - lastTest.date >= RETEST_AFTER && !inProgress,
+      photosDue: lastTest !== undefined && (!lastPhoto || now - lastPhoto.date >= PHOTOS_EVERY),
+      history,
+      inProgress,
+      steps,
+      streak: currentStreak(history.map((s) => s.finishedAt!), now),
+      // Segunda-feira: a pesagem vem antes de tudo.
+      isMonday: new Date(now).getDay() === 1,
+    }
   })
 
   if (!data) return null
-  const { tested, history, inProgress, steps, isMonday } = data
+  const { tested, retestDue, photosDue, history, inProgress, steps, streak, isMonday } = data
 
   const weekCount = history.filter((s) => s.finishedAt! >= startOfWeek()).length
   const trainedToday = history.some((s) => s.finishedAt! >= startOfDay())
@@ -90,7 +105,35 @@ export function TodayScreen({ actions }: { actions: FlowActions }) {
             <span key={i} className={`dot${i < weekCount ? ' done' : ''}`} />
           ))}
         </div>
+        {streak > 0 && (
+          <p className="small">
+            🔥 <strong>{streak}</strong> {streak === 1 ? 'semana completa' : 'semanas seguidas'}
+            {weekCount < WEEKLY_GOAL && ' — complete esta semana para manter'}
+          </p>
+        )}
       </section>
+
+      {retestDue && (
+        <section className="card">
+          <p className="eyebrow">Marco de progresso</p>
+          <h2>Hora de refazer o teste de nível</h2>
+          <p className="muted small">Já faz 4 semanas. Compare seus números com o último teste e recalibre os degraus.</p>
+          <button type="button" className="button-secondary" onClick={actions.startLevelTest}>
+            Refazer teste
+          </button>
+        </section>
+      )}
+
+      {photosDue && (
+        <section className="card">
+          <p className="eyebrow">Fotos do mês</p>
+          <h2>Registre como você está hoje</h2>
+          <p className="muted small">Frente, lado e costas. Daqui a uns meses você vai agradecer.</p>
+          <a className="button-secondary as-link" href="#progresso/fotos">
+            Tirar fotos
+          </a>
+        </section>
+      )}
 
       {!isMonday && <WeightCard prompt />}
 

@@ -63,6 +63,17 @@ export interface FoodLog {
   createdAt: number
 }
 
+export type Pose = 'frente' | 'lado' | 'costas'
+
+export interface Photo {
+  id?: number
+  /** Início do dia. */
+  date: number
+  pose: Pose
+  /** JPEG comprimido (~1080 px no maior lado). */
+  blob: Blob
+}
+
 export const db = new Dexie('workout') as Dexie & {
   settings: EntityTable<Setting, 'key'>
   ladders: EntityTable<LadderState, 'ladderId'>
@@ -71,6 +82,7 @@ export const db = new Dexie('workout') as Dexie & {
   weighIns: EntityTable<WeighIn, 'id'>
   foodShortcuts: EntityTable<FoodShortcut, 'id'>
   foodLogs: EntityTable<FoodLog, 'id'>
+  photos: EntityTable<Photo, 'id'>
 }
 
 db.version(1).stores({
@@ -91,6 +103,10 @@ db.version(3)
   })
   // Atalhos de exemplo na primeira vez (banco novo ou vindo da v2); o usuário edita ou apaga.
   .upgrade((tx) => tx.table('foodShortcuts').bulkAdd(seedShortcuts()))
+
+db.version(4).stores({
+  photos: '++id, date, [date+pose]',
+})
 
 db.on('populate', (tx) => tx.table('foodShortcuts').bulkAdd(seedShortcuts()))
 
@@ -119,6 +135,12 @@ export async function saveWeighIn(date: number, weightKg: number): Promise<void>
     await db.weighIns.where('date').equals(date).delete()
     await db.weighIns.add({ date, weightKg })
   })
+}
+
+export async function proteinByDay(): Promise<Map<number, number>> {
+  const totals = new Map<number, number>()
+  await db.foodLogs.each((log) => totals.set(log.day, (totals.get(log.day) ?? 0) + log.protein))
+  return totals
 }
 
 export async function finishedSessions(): Promise<Session[]> {

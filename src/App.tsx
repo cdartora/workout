@@ -12,7 +12,8 @@ import { TodayScreen } from './screens/TodayScreen.tsx'
 
 // A aba ativa vive no hash (#progresso) para sobreviver a recarregamentos.
 function tabFromHash(): Tab {
-  const hash = window.location.hash.slice(1)
+  // "#progresso/fotos" abre a aba Progresso (o resto do hash é tratado pela tela).
+  const hash = window.location.hash.slice(1).split('/')[0]
   return TABS.some((t) => t.id === hash) ? (hash as Tab) : 'hoje'
 }
 

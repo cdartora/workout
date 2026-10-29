@@ -1,6 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
-import { bestSetFor, db, finishedSessions, lastSetsFor, type Session } from '../db.ts'
+import { bestSetFor, db, finishedSessions, lastSetsFor, proteinByDay, type Session } from '../db.ts'
+import { computeAchievements } from '../program/achievements.ts'
 import { LADDERS, findStep, formatValue, resolveStep, type LadderId } from '../program/ladders.ts'
 import { readyToStepUp } from '../program/progression.ts'
 import { setLadderStep } from '../program/session.ts'
@@ -12,9 +13,19 @@ export function WorkoutSummary({ session, onDone }: { session: Session; onDone: 
   // Histórico anterior a este treino, para comparar.
   const history = useLiveQuery(async () => (await finishedSessions()).filter((s) => s.id !== session.id), [session.id])
   const ladders = useLiveQuery(() => db.ladders.toArray())
+  const extra = useLiveQuery(async () => ({ weighIns: await db.weighIns.toArray(), protein: await proteinByDay() }))
   const [decided, setDecided] = useState<Partial<Record<LadderId, 'up' | 'keep'>>>({})
 
-  if (!history || !ladders) return null
+  if (!history || !ladders || !extra) return null
+
+  // Conquistas desbloqueadas por este treino.
+  const achievementData = { weighIns: extra.weighIns, proteinByDay: extra.protein }
+  const before = new Set(
+    computeAchievements({ ...achievementData, sessions: history }).filter((a) => a.unlockedAt).map((a) => a.id),
+  )
+  const newAchievements = computeAchievements({ ...achievementData, sessions: [...history, session] }).filter(
+    (a) => a.unlockedAt && !before.has(a.id),
+  )
 
   const minutes = Math.round(((session.finishedAt ?? session.startedAt) - session.startedAt) / 60_000)
   const done = session.entries.filter((e) => e.sets.length > 0)
@@ -56,6 +67,19 @@ export function WorkoutSummary({ session, onDone }: { session: Session; onDone: 
           <span className="muted small">{records === 1 ? 'recorde' : 'recordes'}</span>
         </div>
       </div>
+
+      {newAchievements.map((a) => (
+        <div key={a.id} className="card achievement-new">
+          <span className="badge-emoji" aria-hidden="true">
+            {a.emoji}
+          </span>
+          <div>
+            <p className="eyebrow">Nova conquista</p>
+            <h2>{a.title}</h2>
+            <p className="muted small">{a.description}</p>
+          </div>
+        </div>
+      ))}
 
       {rows
         .filter((r) => r.canStepUp)
